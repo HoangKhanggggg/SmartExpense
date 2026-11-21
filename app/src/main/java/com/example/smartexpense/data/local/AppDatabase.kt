@@ -6,8 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.smartexpense.data.local.dao.CategoryDao
 import com.example.smartexpense.data.local.dao.TransactionDao
+import com.example.smartexpense.data.local.dao.UserProfileDao
 import com.example.smartexpense.model.CategoryEntity
 import com.example.smartexpense.model.TransactionEntity
+import com.example.smartexpense.model.UserProfile
 
 /**
  * Room database dạng Singleton (mục 1).
@@ -16,6 +18,7 @@ import com.example.smartexpense.model.TransactionEntity
  */
 @Database(
     entities = [
+        UserProfile::class,
         TransactionEntity::class,
         CategoryEntity::class
     ],
@@ -24,6 +27,7 @@ import com.example.smartexpense.model.TransactionEntity
 )
 abstract class AppDatabase : RoomDatabase() {
 
+    abstract fun userProfileDao(): UserProfileDao
     abstract fun transactionDao(): TransactionDao
     abstract fun categoryDao(): CategoryDao
 
