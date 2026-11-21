@@ -5,9 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.smartexpense.data.local.dao.CategoryDao
+import com.example.smartexpense.data.local.dao.ExchangeRateDao
 import com.example.smartexpense.data.local.dao.TransactionDao
 import com.example.smartexpense.data.local.dao.UserProfileDao
 import com.example.smartexpense.model.CategoryEntity
+import com.example.smartexpense.model.ExchangeRateEntity
 import com.example.smartexpense.model.TransactionEntity
 import com.example.smartexpense.model.UserProfile
 
@@ -20,7 +22,8 @@ import com.example.smartexpense.model.UserProfile
     entities = [
         UserProfile::class,
         TransactionEntity::class,
-        CategoryEntity::class
+        CategoryEntity::class,
+        ExchangeRateEntity::class
     ],
     version = 2,
     exportSchema = false
@@ -30,6 +33,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userProfileDao(): UserProfileDao
     abstract fun transactionDao(): TransactionDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun exchangeRateDao(): ExchangeRateDao
 
     companion object {
         /** v1 -> v2: tạo bảng exchange_rates cache tỷ giá (không đụng dữ liệu cũ). */
