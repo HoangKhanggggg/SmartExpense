@@ -23,6 +23,10 @@
                 android:value="true" />
         </service>
 
+        <!-- Người dùng -->
+        <activity
+            android:name=".ui.transactions.AddEditTransactionActivity"
+            android:exported="false" />
         <!-- FileProvider: chia sẻ bản sao accounts.csv -->
         <provider
             android:name="androidx.core.content.FileProvider"
