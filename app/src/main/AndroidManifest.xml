@@ -23,6 +23,21 @@
                 android:value="true" />
         </service>
 
+        <!-- AuthActivity: Register - Login - Forgot password -->
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:exported="false" />
+
+        <!-- MainActivity: Bottom Navigation 4 tab -->
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <!-- Người dùng -->
         <activity
             android:name=".ui.transactions.AddEditTransactionActivity"
