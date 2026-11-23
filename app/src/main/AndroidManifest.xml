@@ -46,6 +46,12 @@
             android:name=".ui.transactions.DetailActivity"
             android:exported="false" />
 
+        <!-- Tài khoản: xem/sửa thông tin cá nhân -->
+        <activity
+            android:name=".ui.profile.AccountActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- Nhật ký thay đổi: lịch sử cập nhật từ 1.0 đến phiên bản hiện tại -->
         <activity
             android:name=".ui.changelog.ChangelogActivity"
