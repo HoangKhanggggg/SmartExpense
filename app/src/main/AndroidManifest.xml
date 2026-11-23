@@ -35,6 +35,9 @@
             android:name=".ui.admin.UserDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.admin.CsvManageActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.admin.ActivityLogActivity"
             android:exported="false" />
 
