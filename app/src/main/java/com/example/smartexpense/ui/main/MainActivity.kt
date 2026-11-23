@@ -12,6 +12,7 @@ import com.example.smartexpense.ui.auth.AuthActivity
 import com.example.smartexpense.utils.DateTimeUtils
 import com.example.smartexpense.utils.applySystemBarInsets
 import com.example.smartexpense.ui.home.HomeFragment
+import com.example.smartexpense.ui.stats.StatFragment
 import com.example.smartexpense.ui.transactions.AddEditTransactionActivity
 import com.example.smartexpense.ui.transactions.ListFragment
 
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> showFragment(HomeFragment())
                 R.id.nav_transactions -> showFragment(ListFragment())
+                R.id.nav_stats -> showFragment(StatFragment())
             }
             updateFabVisibility(item.itemId)
             true
