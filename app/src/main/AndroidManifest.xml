@@ -46,11 +46,6 @@
             android:name=".ui.transactions.DetailActivity"
             android:exported="false" />
 
-        <!-- Nhật ký thay đổi: lịch sử cập nhật từ 1.0 đến phiên bản hiện tại -->
-        <activity
-            android:name=".ui.changelog.ChangelogActivity"
-            android:exported="false" />
-
         <activity
             android:name=".ui.admin.UserDetailActivity"
             android:exported="false" />
