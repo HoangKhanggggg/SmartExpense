@@ -24,6 +24,14 @@ val localProperties = Properties().apply {
 }
 val adminEmails = localProperties.getProperty("admin.emails", "")
 
+// keystore.properties (KHÔNG commit, đã có trong .gitignore) chứa đường dẫn + mật khẩu keystore ký bản release.
+// Mẫu: keystore.properties.example. Thiếu file -> bản release ký bằng khóa debug (chỉ để chạy thử).
+val keystoreProps = Properties().apply {
+    val f = rootProject.file("keystore.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+val hasReleaseKeystore = keystoreProps.getProperty("storeFile") != null
+
 android {
     namespace = "com.example.smartexpense"
     compileSdk = 37
@@ -41,10 +49,28 @@ android {
         buildConfigField("String", "ADMIN_EMAILS", "\"$adminEmails\"")
     }
 
+    signingConfigs {
+        create("release") {
+            if (hasReleaseKeystore) {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // Cột mốc 5: thu gọn + làm rối mã (R8), bỏ tài nguyên thừa, ký bằng keystore của nhóm
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = if (hasReleaseKeystore) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 
