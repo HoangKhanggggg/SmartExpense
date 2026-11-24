@@ -7,6 +7,15 @@ plugins {
     alias(libs.plugins.google.services)
 }
 
+// google-services.json chứa khóa API thật nên KHÔNG nằm trong Git (.gitignore).
+// Clone repo về chưa có file này -> tự chép bản mẫu (giá trị giả) để build được.
+// Đăng nhập Firebase chỉ hoạt động khi bạn đặt file thật tải từ Firebase Console (xem API_SETUP.md).
+val googleServicesFile = file("google-services.json")
+if (!googleServicesFile.exists()) {
+    file("google-services.json.example").copyTo(googleServicesFile)
+    logger.lifecycle("Chưa có app/google-services.json -> dùng bản mẫu; Đăng nhập Firebase sẽ không hoạt động (vẫn dùng được chế độ DEMO).")
+}
+
 // Đọc admin.emails từ local.properties (không commit) để BuildConfig dùng cho isAdmin()
 // Nếu thiếu hoặc rỗng: app hoạt động bình thường nhưng không có tài khoản admin
 val localProperties = Properties().apply {
