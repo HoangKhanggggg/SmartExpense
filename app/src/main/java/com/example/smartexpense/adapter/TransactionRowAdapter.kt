@@ -3,7 +3,6 @@ package com.example.smartexpense.adapter
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -33,14 +32,8 @@ class TransactionRowAdapter(
         val binding = holder.binding
         val context = binding.root.context
 
-        // Badge: icon theo iconKey cục bộ của danh mục
-        binding.ivIcon.setImageResource(UiUtils.categoryIconId(context, row.iconKey))
-
-        val color = UiUtils.parseColor(row.colorHex)
-        binding.badgeCircle.background?.let { drawable ->
-            val wrapped = DrawableCompat.wrap(drawable.mutate())
-            DrawableCompat.setTint(wrapped, color)
-        }
+        // Badge + icon danh mục: Glide tải từ iconUrl, dự phòng icon cục bộ theo iconKey
+        UiUtils.bindCategoryIcon(binding.badgeCircle, binding.ivIcon, row.iconUrl, row.iconKey, row.colorHex)
 
         binding.tvTitle.text = row.title
         binding.tvSubtitle.text = row.subtitle
