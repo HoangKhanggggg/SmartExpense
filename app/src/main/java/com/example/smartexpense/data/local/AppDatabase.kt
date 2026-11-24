@@ -11,7 +11,6 @@ import com.example.smartexpense.data.local.dao.TransactionDao
 import com.example.smartexpense.data.local.dao.UserProfileDao
 import com.example.smartexpense.model.AdminLogEntity
 import com.example.smartexpense.model.CategoryEntity
-import com.example.smartexpense.model.DefaultCategoryIcons
 import com.example.smartexpense.model.ExchangeRateEntity
 import com.example.smartexpense.model.TransactionEntity
 import com.example.smartexpense.model.UserProfile
@@ -20,7 +19,6 @@ import com.example.smartexpense.model.UserProfile
  * Room database dạng Singleton (mục 1).
  * Schema v1 đã đủ role/status/lastLoginAt và colorHex/iconKey để tránh migration sau này (mục 7).
  * v2 (1.4): thêm bảng exchange_rates - cache tỷ giá cho phân hệ Tỷ giá USD→VND.
- * v3 (Cột mốc 5): giữ nguyên schema, chỉ điền iconUrl mặc định cho danh mục đã có (Glide tải icon).
  */
 @Database(
     entities = [
@@ -30,7 +28,7 @@ import com.example.smartexpense.model.UserProfile
         AdminLogEntity::class,
         ExchangeRateEntity::class
     ],
-    version = 3,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -56,17 +54,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        /** v2 -> v3: điền URL icon mặc định cho danh mục chưa có URL (không đụng danh mục admin đã tự đặt URL). */
-        private val MIGRATION_2_3 = object : androidx.room.migration.Migration(2, 3) {
-            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
-                DefaultCategoryIcons.urls.forEach { (iconKey, url) ->
-                    db.execSQL(
-                        "UPDATE categories SET iconUrl = '$url' WHERE iconKey = '$iconKey' AND iconUrl = ''"
-                    )
-                }
-            }
-        }
-
         @Volatile
         private var instance: AppDatabase? = null
 
@@ -77,7 +64,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "smartexpense.db"
                 )
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    .addMigrations(MIGRATION_1_2)
                     .build()
                     .also { instance = it }
             }

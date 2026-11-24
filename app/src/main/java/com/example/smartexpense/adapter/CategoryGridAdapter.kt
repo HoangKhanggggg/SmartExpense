@@ -2,6 +2,7 @@ package com.example.smartexpense.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartexpense.R
 import com.example.smartexpense.databinding.ItemCategoryGridBinding
@@ -48,7 +49,11 @@ class CategoryGridAdapter(
         val binding = holder.binding
         val context = binding.root.context
 
-        UiUtils.bindCategoryIcon(binding.badgeCircle, binding.ivIcon, category.iconUrl, category.iconKey, category.colorHex)
+        binding.badgeCircle.background?.let { drawable ->
+            val wrapped = DrawableCompat.wrap(drawable.mutate())
+            DrawableCompat.setTint(wrapped, UiUtils.parseColor(category.colorHex))
+        }
+        binding.ivIcon.setImageResource(UiUtils.categoryIconId(context, category.iconKey))
         binding.tvName.text = category.name
 
         val selected = category.id == selectedId

@@ -3,6 +3,7 @@ package com.example.smartexpense.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -69,7 +70,12 @@ class GroupedTransactionAdapter(
         val binding = holder.binding
         val context = binding.root.context
 
-        UiUtils.bindCategoryIcon(binding.badgeCircle, binding.ivIcon, tx.iconUrl, tx.iconKey, tx.colorHex)
+        binding.ivIcon.setImageResource(UiUtils.categoryIconId(context, tx.iconKey))
+        val color = UiUtils.parseColor(tx.colorHex)
+        binding.badgeCircle.background?.let { drawable ->
+            val wrapped = DrawableCompat.wrap(drawable.mutate())
+            DrawableCompat.setTint(wrapped, color)
+        }
 
         binding.tvTitle.text = tx.title
         binding.tvSubtitle.text = tx.subtitle
