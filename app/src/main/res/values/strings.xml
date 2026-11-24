@@ -299,6 +299,8 @@
     <string name="category_dialog_name_hint">Tên danh mục</string>
     <string name="category_dialog_color_hint">Mã màu (vd #2563EB)</string>
     <string name="category_error_invalid_color">Mã màu không hợp lệ</string>
+    <string name="category_dialog_icon_url_hint">URL icon (tùy chọn, bắt đầu bằng https://)</string>
+    <string name="category_error_invalid_url">URL icon phải bắt đầu bằng https://</string>
 
     <!-- ================= Admin - CSV ================= -->
     <string name="csv_manage_title">Quản lý file CSV</string>

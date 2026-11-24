@@ -304,6 +304,8 @@
     <string name="category_dialog_name_hint">Category name</string>
     <string name="category_dialog_color_hint">Color code (e.g. #2563EB)</string>
     <string name="category_error_invalid_color">Invalid color code</string>
+    <string name="category_dialog_icon_url_hint">Icon URL (optional, starts with https://)</string>
+    <string name="category_error_invalid_url">Icon URL must start with https://</string>
 
     <!-- ================= Admin - CSV ================= -->
     <string name="csv_manage_title">CSV file management</string>
