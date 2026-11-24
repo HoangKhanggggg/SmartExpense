@@ -2,7 +2,6 @@ package com.example.smartexpense.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartexpense.R
 import com.example.smartexpense.databinding.ItemCategoryManageBinding
@@ -38,11 +37,7 @@ class CategoryManageAdapter(
         val binding = holder.binding
         val context = binding.root.context
 
-        binding.badgeCircle.background?.let { drawable ->
-            val wrapped = DrawableCompat.wrap(drawable.mutate())
-            DrawableCompat.setTint(wrapped, UiUtils.parseColor(category.colorHex))
-        }
-        binding.ivIcon.setImageResource(UiUtils.categoryIconId(context, category.iconKey))
+        UiUtils.bindCategoryIcon(binding.badgeCircle, binding.ivIcon, category.iconUrl, category.iconKey, category.colorHex)
         binding.tvName.text = category.name
 
         val isIncome = category.type == CategoryEntity.TYPE_INCOME
