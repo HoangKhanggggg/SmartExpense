@@ -223,7 +223,8 @@ class ListFragment : Fragment() {
                         amount = t.amount,
                         income = t.type == com.example.smartexpense.model.TransactionEntity.TYPE_INCOME,
                         colorHex = category?.colorHex,
-                        iconKey = category?.iconKey
+                        iconKey = category?.iconKey,
+                        iconUrl = category?.iconUrl
                     )
                 }
             }
