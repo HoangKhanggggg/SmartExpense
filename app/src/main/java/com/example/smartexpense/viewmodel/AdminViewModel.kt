@@ -318,15 +318,23 @@ class AdminViewModel(private val app: Application) : AndroidViewModel(app) {
     val categories: StateFlow<List<CategoryEntity>> = categoryRepo.observeAll()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
-    fun insertCategory(name: String, type: String, colorHex: String) {
+    fun insertCategory(name: String, type: String, colorHex: String, iconUrl: String = "") {
         viewModelScope.launch(Dispatchers.IO) {
-            categoryRepo.insert(name, type, colorHex)
+            categoryRepo.insert(name, type, colorHex, iconUrl = iconUrl)
         }
     }
 
-    fun updateCategory(category: CategoryEntity, newName: String, newType: String, newColorHex: String) {
+    fun updateCategory(
+        category: CategoryEntity,
+        newName: String,
+        newType: String,
+        newColorHex: String,
+        newIconUrl: String = category.iconUrl
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            categoryRepo.update(category.copy(name = newName, type = newType, colorHex = newColorHex))
+            categoryRepo.update(
+                category.copy(name = newName, type = newType, colorHex = newColorHex, iconUrl = newIconUrl)
+            )
         }
     }
 
