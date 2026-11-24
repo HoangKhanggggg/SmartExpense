@@ -65,7 +65,8 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
                         amount = t.amount,
                         income = t.type == TransactionEntity.TYPE_INCOME,
                         colorHex = category?.colorHex,
-                        iconKey = category?.iconKey
+                        iconKey = category?.iconKey,
+                        iconUrl = category?.iconUrl
                     )
                 }
             )
