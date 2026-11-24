@@ -100,5 +100,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
 
+    // LeakCanary: chỉ bản debug, tự phát hiện rò rỉ bộ nhớ (xem docs/PERFORMANCE.md)
+    debugImplementation(libs.leakcanary.android)
+
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

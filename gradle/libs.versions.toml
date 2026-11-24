@@ -17,6 +17,7 @@ lifecycle = "2.11.0"
 coroutines = "1.11.0"
 room = "2.8.5"
 glide = "4.16.0"
+leakcanary = "2.14"
 firebaseBom = "35.1.0"
 googleServices = "4.5.0"
 securityCrypto = "1.1.0"   # bản stable chính thức
@@ -42,6 +43,9 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 
 # Glide (tải icon danh mục từ URL)
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+
+# LeakCanary: phát hiện rò rỉ bộ nhớ, chỉ dùng cho bản debug (Cột mốc 5)
+leakcanary-android = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
 
 # Firebase (Auth Email/Password + Firestore lưu hồ sơ) - dùng BoM để đồng bộ phiên bản
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
