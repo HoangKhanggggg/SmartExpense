@@ -58,12 +58,13 @@ class CategoryManageActivity : AppCompatActivity() {
         }
     }
 
-    /** Hộp thoại thêm/sửa danh mục (mục 6.6): tên, loại (Chi/Thu), mã màu hex */
+    /** Hộp thoại thêm/sửa danh mục (mục 6.6): tên, loại (Chi/Thu), mã màu hex, URL icon (https) */
     private fun showCategoryDialog(editing: CategoryEntity?) {
         val dialogBinding = DialogCategoryBinding.inflate(layoutInflater)
         editing?.let {
             dialogBinding.edtName.setText(it.name)
             dialogBinding.edtColor.setText(it.colorHex)
+            dialogBinding.edtIconUrl.setText(it.iconUrl)
             if (it.type == CategoryEntity.TYPE_INCOME) {
                 dialogBinding.rbIncome.isChecked = true
                 dialogBinding.rbExpense.isChecked = false
@@ -80,6 +81,7 @@ class CategoryManageActivity : AppCompatActivity() {
             .setPositiveButton(R.string.btn_ok) { _, _ ->
                 val name = dialogBinding.edtName.text.toString().trim()
                 val color = dialogBinding.edtColor.text.toString().trim()
+                val iconUrl = dialogBinding.edtIconUrl.text.toString().trim()
                 val type =
                     if (dialogBinding.rbIncome.isChecked) CategoryEntity.TYPE_INCOME
                     else CategoryEntity.TYPE_EXPENSE
@@ -93,12 +95,17 @@ class CategoryManageActivity : AppCompatActivity() {
                     return@setPositiveButton
                 }
 
+                if (iconUrl.isNotEmpty() && !iconUrl.startsWith("https://")) {
+                    Snackbar.make(binding.root, getString(R.string.category_error_invalid_url), Snackbar.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
                 val current = editing
                 if (current == null) {
-                    viewModel.insertCategory(name, type, color)
+                    viewModel.insertCategory(name, type, color, iconUrl)
                     Snackbar.make(binding.root, getString(R.string.app_name), Snackbar.LENGTH_SHORT).show()
                 } else {
-                    viewModel.updateCategory(current, name, type, color)
+                    viewModel.updateCategory(current, name, type, color, iconUrl)
                 }
             }
             .show()
