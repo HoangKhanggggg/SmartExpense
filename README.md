@@ -18,7 +18,7 @@ Mọi thứ chạy trên chính app — không cần server riêng ngoài Fireba
 
 1. Cần **Android Studio** (kèm SDK 37) và một **project Firebase** — xem hướng dẫn từng bước trong [`API_SETUP.md`](API_SETUP.md) mục 1.
 2. Clone repo này, mở bằng Android Studio và chờ Gradle sync (danh sách dependency nằm trong `gradle/libs.versions.toml`).
-3. Tải **`google-services.json`** từ Firebase Console và chép đè lên `app/google-services.json` (file trong repo là file giả lập để build được — đăng nhập sẽ lỗi cho tới khi thay).
+3. Tải **`google-services.json`** từ Firebase Console và đặt vào `app/google-services.json`. File thật **không** được commit (đã nằm trong `.gitignore`). Nếu bạn chưa có, Gradle tự chép `app/google-services.json.example` (giá trị giả) để project build được — khi đó **Đăng nhập/Đăng ký Firebase sẽ lỗi**, nhưng nút **Run DEMO** vẫn dùng được.
 4. *(Tùy chọn, để có tính năng admin)* Mở `local.properties` và thêm:
    ```
    admin.emails=email-cua-ban@gmail.com
@@ -122,12 +122,21 @@ Tất cả các mục dưới đây chạy ngay trong app; cách dùng chi tiế
 - Nhật ký thay đổi đầy đủ **ngay trong app**: Cài đặt → *Xem nhật ký thay đổi* (nội dung từ `ui/changelog/ChangelogData.kt`).
 - Bản dựng kiểm thử: `gradlew assembleDebug` — APK ở `app/build/outputs/apk/debug/`.
 
+## Cột mốc 5: bảo mật, hiệu năng, đóng gói
+
+- **Ẩn khóa API**: `google-services.json` không nằm trong Git; `admin.emails` và `keystore.properties` chỉ nằm trong file cục bộ (đều có trong `.gitignore`).
+- **Glide**: icon danh mục tải bất đồng bộ từ URL (có cache đĩa), mất mạng/lỗi thì dùng icon cục bộ. Admin có thể nhập URL riêng trong *Quản lý danh mục*.
+- **LeakCanary** (chỉ bản debug) và quy trình đo bằng Android Profiler: xem [`docs/PERFORMANCE.md`](docs/PERFORMANCE.md).
+- **Đóng gói APK/AAB Release** (Keystore + R8): xem [`RELEASE.md`](RELEASE.md).
+
 ## Special thanks
 
 - **Firebase** (Auth + Firestore) — xác thực và đồng bộ hồ sơ.
 - **AndroidX / Material** (Room, ViewModel, Navigation, Material Design) — nền tảng của toàn bộ app.
 - **Retrofit & Gson** — đọc JSON tỷ giá.
 - **open.er-api.com** — API tỷ giá miễn phí, không cần key.
+- **Glide** — tải ảnh bất đồng bộ; **LeakCanary** — phát hiện rò rỉ bộ nhớ (debug).
+- **Twemoji** (jdecked/twemoji, giấy phép CC-BY 4.0) — icon danh mục mặc định tải từ mạng.
 - **Flaticon & các bộ icon vector** — icon danh mục và giao diện.
 
 ## License

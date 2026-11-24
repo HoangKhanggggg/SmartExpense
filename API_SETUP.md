@@ -13,9 +13,11 @@
    - SHA-1: bỏ trống (Email/Password không cần)
 2. **Register app** → tải file **`google-services.json`** xuống.
 
-### Bước 3: Thay file placeholder
-- Copy file vừa tải vào **thay đè**file: `app/google-services.json`
-- (File hiện tại trong project là file GIẢ LẬP để build được — đăng nhập sẽ lỗi cho tới khi thay.)
+### Bước 3: Đặt file google-services.json
+- Copy file vừa tải vào: `app/google-services.json`
+- File này chứa khóa API nên đã nằm trong `.gitignore` (không bị commit nhầm). Nếu thiếu file,
+  Gradle tự chép `app/google-services.json.example` (giá trị giả) để project build được —
+  khi đó đăng nhập Firebase sẽ lỗi cho tới khi bạn đặt file thật.
 
 ### Bước 4: Bật Email/Password login
 1. Menu **Build → Authentication → Get started**.
