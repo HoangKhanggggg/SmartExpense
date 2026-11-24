@@ -9,7 +9,8 @@ data class TxRow(
     val income: Boolean,
     val colorHex: String? = null,
     val iconKey: String? = null,
-    val flagged: Boolean = false
+    val flagged: Boolean = false,
+    val iconUrl: String? = null   // URL icon danh mục (Glide); rỗng -> dùng iconKey cục bộ
 )
 
 /** Danh sách nhóm theo ngày: tiêu đề ngày + các dòng giao dịch */
