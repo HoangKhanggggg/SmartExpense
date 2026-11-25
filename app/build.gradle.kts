@@ -7,6 +7,15 @@ plugins {
     alias(libs.plugins.google.services)
 }
 
+// google-services.json chứa khóa API thật nên KHÔNG nằm trong Git (.gitignore).
+// Clone repo về chưa có file này -> tự chép bản mẫu (giá trị giả) để build được.
+// Đăng nhập Firebase chỉ hoạt động khi bạn đặt file thật tải từ Firebase Console (xem API_SETUP.md).
+val googleServicesFile = file("google-services.json")
+if (!googleServicesFile.exists()) {
+    file("google-services.json.example").copyTo(googleServicesFile)
+    logger.lifecycle("Chưa có app/google-services.json -> dùng bản mẫu; Đăng nhập Firebase sẽ không hoạt động (vẫn dùng được chế độ DEMO).")
+}
+
 // Đọc admin.emails từ local.properties (không commit) để BuildConfig dùng cho isAdmin()
 // Nếu thiếu hoặc rỗng: app hoạt động bình thường nhưng không có tài khoản admin
 val localProperties = Properties().apply {
@@ -14,6 +23,14 @@ val localProperties = Properties().apply {
     if (f.exists()) f.inputStream().use { load(it) }
 }
 val adminEmails = localProperties.getProperty("admin.emails", "")
+
+// keystore.properties (KHÔNG commit, đã có trong .gitignore) chứa đường dẫn + mật khẩu keystore ký bản release.
+// Mẫu: keystore.properties.example. Thiếu file -> bản release ký bằng khóa debug (chỉ để chạy thử).
+val keystoreProps = Properties().apply {
+    val f = rootProject.file("keystore.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+val hasReleaseKeystore = keystoreProps.getProperty("storeFile") != null
 
 android {
     namespace = "com.example.smartexpense"
@@ -32,10 +49,28 @@ android {
         buildConfigField("String", "ADMIN_EMAILS", "\"$adminEmails\"")
     }
 
+    signingConfigs {
+        create("release") {
+            if (hasReleaseKeystore) {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // Cột mốc 5: thu gọn + làm rối mã (R8), bỏ tài nguyên thừa, ký bằng keystore của nhóm
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = if (hasReleaseKeystore) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 
@@ -90,6 +125,9 @@ dependencies {
     // Retrofit: gọi REST API JSON (phân hệ Tỷ giá USD→VND)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
+
+    // LeakCanary: chỉ bản debug, tự phát hiện rò rỉ bộ nhớ (xem docs/PERFORMANCE.md)
+    debugImplementation(libs.leakcanary.android)
 
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

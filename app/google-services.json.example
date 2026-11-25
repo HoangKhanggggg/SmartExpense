@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "769596534626",
-    "project_id": "smartexpense-58538",
-    "storage_bucket": "smartexpense-58538.firebasestorage.app"
+    "project_number": "000000000000",
+    "project_id": "smartexpense-placeholder",
+    "storage_bucket": "smartexpense-placeholder.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:769596534626:android:5fa882ae8eeb3d9a86463b",
+        "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
         "android_client_info": {
           "package_name": "com.example.smartexpense"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBuzg3aYVtGIsn1fXPXwisQEitC0lzc-Ic"
+          "current_key": "AIzaSyPLACEHOLDER_KHONG_DUNG_DUOC_000000"
         }
       ],
       "services": {

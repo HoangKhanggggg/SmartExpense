@@ -22,6 +22,8 @@ keystore.properties
 *.aab
 output.json
 
-# google-services.json CỐ Ý commit ở đây vì dùng bản placeholder
-# để project build được; nhóm thay bằng file thật tải từ Firebase Console
-# (điền package com.example.smartexpense) rồi giữ nguyên trong Git nếu muốn.
+# google-services.json chứa khóa API Firebase của dự án -> KHÔNG commit (Cột mốc 5: ẩn khóa API).
+# Repo chỉ có app/google-services.json.example (giá trị giả). Khi chưa có file thật,
+# Gradle tự chép bản mẫu để project build được. Muốn đăng nhập Firebase thật: đặt file tải từ
+# Firebase Console vào app/google-services.json (xem API_SETUP.md).
+app/google-services.json
